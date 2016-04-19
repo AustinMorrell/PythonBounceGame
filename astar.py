@@ -14,11 +14,23 @@ class Node:
 		self.f = None
 		self.g = None
 		self.h = None
+		self.image = gfx.image.load("ball.gif")
+		self.WinBox = False
+		self.Start = False
 
 	def draw(self, screen, color):
-		margin = self.margin
-		color = (0, 0, 255) if (self.walkable) else (255,0,0)
-		gfx.draw.rect(screen, color, (self.left , self.top, self.width, self.height))
+		if self.WinBox == False and self.Start == False:
+			margin = self.margin
+			color = (0, 0, 255) if (self.walkable) else (255,0,0)
+			gfx.draw.rect(screen, color, (self.left , self.top, self.width, self.height))
+		elif self.WinBox == True:
+			margin = self.margin
+			color = (0, 255, 0)
+			gfx.draw.rect(screen, color, (self.left , self.top, self.width, self.height))
+		elif self.Start == True:
+			margin = self.margin
+			color = (255, 255, 255)
+			gfx.draw.rect(screen, color, (self.left , self.top, self.width, self.height))
 		
 	def setWalk(self, walkable):
 		self.walkable = walkable
@@ -31,9 +43,10 @@ class Node:
 		self.g = val
 		
 class Astar:
-	def __init__(self, SearchSpace, Start, Goal):
+	def __init__(self, SearchSpace, Start, Goal, x, y):
 		self.OPEN = []
-		self.CLOSED = []		
+		self.CLOSED = []
+		self.pos = (x, y)
 	
 	def Run(self):
 		self.OPEN.append(Start)
