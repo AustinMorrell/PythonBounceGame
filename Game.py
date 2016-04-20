@@ -24,7 +24,7 @@ def main():
 	clock = pygame.time.Clock()
 
 	screen = pygame.display.set_mode(size)
-	Traviler = Astar(searchSpace, searchSpace[0], searchSpace[99], searchSpace[0].pos.x, searchSpace.pos.y)
+	Traviler = Astar(searchSpace, searchSpace[0], searchSpace[99])
 	#-----------------------------------------------------------------------------------
 	while 1:
 		key = pygame.key.get_pressed()
@@ -42,7 +42,8 @@ def main():
 			#screen.fill(black)
 			i.draw(screen, (255,255,255))
 		
-		print(Traviler.pos.x, Traviler.pos.y)
+		Traviler.Run()
+		Traviler.Draw(screen, (0, 255, 0))
 		clock.tick(60)
 		#screen.blit(ball, ballrect)
 		pygame.display.flip()

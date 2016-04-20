@@ -43,16 +43,25 @@ class Node:
 		self.g = val
 		
 class Astar:
-	def __init__(self, SearchSpace, Start, Goal, x, y):
+	def __init__(self, SearchSpace, Start, Goal):
 		self.OPEN = []
 		self.CLOSED = []
-		self.pos = (x, y)
+		self.Start = Start
+		self.OPEN.append(self.Start)
+		self.current = Node(0, 0)
+		self.goal = Goal
+		self.searchSpace = SearchSpace
 	
 	def Run(self):
-		self.OPEN.append(Start)
+		#self.OPEN.append(self.Start)
+		self.current.f = -1
+		for a in self.searchSpace:
+			if (a.pos[0] == self.current.pos[0] - 1 or a.pos[1] == self.current.pos[1] - 1) and a.walkable == True:
+				a.f = 10
+				a.parent = self.current
+				self.OPEN.append(a)
 		while not self.OPEN:
-			current = self.LowestF(self.OPEN)
-			
+			self.current = self.LowestF(self.OPEN)
 	def LowestF(self, Nodes):
 		lowestF = -1
 		nodeWithLowestF = None
@@ -61,3 +70,8 @@ class Astar:
 				lowestF = node.f
 				nodeWithLowestF = node
 		return nodeWithLowestF
+	
+	def Draw(self, screen, color):
+		self.left = (5 + 10) *  self.current.pos[0] + 5
+		self.top = (5 + 10) *  self.current.pos[1] + 5
+		gfx.draw.rect(screen, color, (self.left , self.top, 10, 10))
